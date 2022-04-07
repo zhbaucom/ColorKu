@@ -128,20 +128,27 @@ class ckPuzzle:
         error_list = []
         for k in np.arange(9):
             icol = self.possdf.iloc[k,:]
-            ucol, colcount = np.unique((np.concatenate([x for x in icol if len(x) == 1 ])), return_counts = True)
-            if any(colcount >1):
-                error_list.append("Problem with puzzle!\n Algorithm found multiple " + ', '.join(ucol[colcount > 1])+ " in row " + str(k))
+
+            xvec = [x for x in icol if len(x) == 1 ]
+            if len(xvec)>0:
+                ucol, colcount = np.unique((np.concatenate(xvec)), return_counts = True)
+                if any(colcount >1):
+                    error_list.append("Problem with puzzle!\n Algorithm found multiple " + ', '.join(ucol[colcount > 1])+ " in row " + str(k))
 
             icol = self.possdf.iloc[:,k]
-            ucol, colcount = np.unique((np.concatenate([x for x in icol if len(x) == 1 ])), return_counts = True)
-            if any(colcount >1):
-                error_list.append("Problem with puzzle!\n Algorithm found multiple " + ', '.join(ucol[colcount > 1])+ " in column " + str(k))
+            xvec = [x for x in icol if len(x) == 1 ]
+            if len(xvec)>0:
+                ucol, colcount = np.unique((np.concatenate(xvec)), return_counts = True)
+                if any(colcount >1):
+                    error_list.append("Problem with puzzle!\n Algorithm found multiple " + ', '.join(ucol[colcount > 1])+ " in column " + str(k))
 
             i, j = square_ind(k)
             icol = np.concatenate(self.possdf.iloc[i,j].values)
-            ucol, colcount = np.unique(np.concatenate([x for x in icol if len(x) == 1 ]), return_counts = True)
-            if any(colcount >1):
-                error_list.append("Problem with puzzle!\n Algorithm found multiple " + ', '.join(ucol[colcount > 1])+ " in square " + str(k))
+            xvec = [x for x in icol if len(x) == 1 ]
+            if len(xvec)>0:
+                ucol, colcount = np.unique(np.concatenate(xvec), return_counts = True)
+                if any(colcount >1):
+                    error_list.append("Problem with puzzle!\n Algorithm found multiple " + ', '.join(ucol[colcount > 1])+ " in square " + str(k))
 
         if len(error_list) > 0:
             return error_list
