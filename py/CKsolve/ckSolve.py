@@ -148,7 +148,7 @@ class ckPuzzle:
         self.missx, self.missy = np.where((puzzna + possna) == 2)
 
     ## Looks to check if a cell was somehow incorrectly specified. My R version allowed this somehow if the puzzle was wrong.
-    def errorCheck(self):
+    def error_check(self):
         rowcols = []
         colcols = []
         sqcols = []
@@ -256,12 +256,12 @@ def puzzle_solver(puzzle_vector):
         mypuz.solve1step()
         mypuz.puzzle_update(reveal = "all")
         ## Stop if there is an error, if the puzzle hadn't changed from the last iteration, or if the puzzle is complete
-        cont = (mypuz.errorCheck() == "No error") and (mypuz.puzz_change()) and (not mypuz.complete_check())
+        cont = (mypuz.error_check() == "No error") and (mypuz.puzz_change()) and (not mypuz.complete_check())
         if cont:
             puzzle_vector = mypuz.puzzdf_update_values
     ## Message and output handler
-    if (mypuz.errorCheck() != "No error"):
-        return mypuz.errorCheck()
+    if (mypuz.error_check() != "No error"):
+        return mypuz.error_check()
     if (not mypuz.puzz_change()) and (not mypuz.complete_check()):
         print("Logic got stuck at...")
         return mypuz.puzzdf_update
